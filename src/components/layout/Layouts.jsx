@@ -20,15 +20,15 @@ const Layouts = () => {
   });
 
   return (
-    <div>
+    <div className="min-h-screen w-screen h-screen">
       <Toaster />
       <Header />
-      <main className="mt-10">
-        <Container>
+      <main className="mt-10 w-full h-[calc(100vh-108px)]">
+        <Container classNmae="h-full">
           <Outlet />
         </Container>
       </main>
-      <Footer />
+      {/* <Footer /> */}
     </div>
   );
 };

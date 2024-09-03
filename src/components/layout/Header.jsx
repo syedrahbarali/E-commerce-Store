@@ -1,11 +1,13 @@
 import React from "react";
-import { Link, NavLink } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { Container, Logo, Logout } from "../index";
 import { HiShoppingCart } from "react-icons/hi";
 import { useSelector } from "react-redux";
+import Select from "../Select";
 
 const Header = () => {
   const authStatus = useSelector((store) => store.auth.status);
+  const role = useSelector((store) => store.auth.userData.role);
   const navItems = [
     {
       name: "Home",
@@ -29,28 +31,48 @@ const Header = () => {
     },
   ];
 
+  const options = [
+    {
+      name: "Rahbar",
+      active: authStatus,
+    },
+    {
+      name: "Dashboard",
+      path: `/dashboard${role === "admin" ? "/admin" : ""}`,
+      active: authStatus,
+    },
+    {
+      name: "Log out",
+      active: authStatus,
+    },
+  ];
+
   return (
     <div className="py-4 sticky top-0 bg-inherit shadow-md">
       <Container classNmae="flex item-center justify-between">
         <Logo />
 
-        <ul className="flex items-center  gap-4">
-          {navItems.map((item, index) =>
-            item.active ? (
-              <li key={index}>
-                <NavLink to={item.path} className="font-semibold">
-                  {item.name}
-                </NavLink>
-              </li>
-            ) : null
-          )}
-          <li>
-            <Link>
-              <HiShoppingCart size={24} />
-            </Link>
-          </li>
-          {authStatus && <Logout />}
-        </ul>
+        <div className="flex items-center gap-4">
+          <ul className="hidden md:flex items-center  gap-4">
+            {navItems.map((item, index) =>
+              item.active ? (
+                <li key={index}>
+                  <NavLink to={item.path} className="font-semibold">
+                    {item.name}
+                  </NavLink>
+                </li>
+              ) : null
+            )}
+            {authStatus && <Select options={options} />}
+            {authStatus && <Logout />}
+          </ul>
+          <div className="relative">
+            <span className="absolute -right-3 text-xs -top-1.5 px-1 rounded-full font-semibold bg-red-600">
+              7
+            </span>
+            <HiShoppingCart size={24} />
+          </div>
+        </div>
       </Container>
     </div>
   );

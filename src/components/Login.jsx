@@ -10,7 +10,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { login } from "@/store/slices/authSlice";
 import { useDispatch } from "react-redux";
 import authService from "@/appwrite/auth";
@@ -22,6 +22,7 @@ const Login = () => {
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const location = useLocation();
 
   const handleLogin = async (data) => {
     setLoading(true);
@@ -35,7 +36,7 @@ const Login = () => {
 
         dispatch(login({ userData }));
         toast.success("Logged in successfully");
-        navigate("/");
+        navigate(location?.state?.from || "/");
       })
       .finally(() => {
         setLoading(false);
