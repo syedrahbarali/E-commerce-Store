@@ -33,16 +33,16 @@ const Header = () => {
 
   const options = [
     {
-      name: "Rahbar",
+      title: "Rahbar",
       active: authStatus,
     },
     {
-      name: "Dashboard",
+      title: "Dashboard",
       path: `/dashboard${role === "admin" ? "/admin" : ""}`,
       active: authStatus,
     },
     {
-      name: "Log out",
+      title: "Log out",
       active: authStatus,
     },
   ];

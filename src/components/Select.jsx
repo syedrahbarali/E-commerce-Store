@@ -10,14 +10,14 @@ const Select = ({ options = [], className = "", ...props }, ref) => {
   return (
     <select ref={ref} className={`bg-transparent ${className}`} {...props}>
       {options?.map((option, index) =>
-        option.active ? (
+        option.active === undefined || option.active ? (
           <option
-            onClick={() => activeLink(option?.path)}
+            onClick={() => activeLink(option.path ? option.path : "")}
             key={index}
-            value={option.name}
+            value={option.title ? option.title : option}
             className="text-black"
           >
-            {option.name}
+            {option.title ? option.title : option}
           </option>
         ) : null
       )}

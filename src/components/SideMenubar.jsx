@@ -1,27 +1,16 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
 
-const SideMenubar = () => {
-  const menuItem = [
-    {
-      name: "Add Category",
-      path: "add-category",
-    },
-    {
-      name: "Add Product",
-      path: "add-product",
-    },
-    {
-      name: "Users",
-      path: "users",
-    },
-  ];
-
+const SideMenubar = ({ menuItems }) => {
+  const role = useSelector((store) => store.auth.userData);
   return (
     <div className="w-1/6 h-full">
-      <h3 className="text-xl font-bold py-4">Admin Dashboard</h3>
+      <h3 className="text-xl font-bold py-4 capitalize">
+        Welcome {role.name || role.role} !
+      </h3>
       <ul>
-        {menuItem.map((item, index) => (
+        {menuItems.map((item, index) => (
           <li key={index}>
             <NavLink
               to={`${item.path}`}

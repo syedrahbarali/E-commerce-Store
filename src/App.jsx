@@ -3,13 +3,13 @@ import { Route, Routes } from "react-router-dom";
 import Layouts from "./components/layout/Layouts";
 import Home from "./pages/Home";
 import { Login, Signup } from "./components";
-import Dashboard from "./pages/Dashboard";
 import UserProtectedRoute from "./components/user/UserProtectedRoute";
 import AdminProtectedRoute from "./components/admin/AdminProtectedRoute";
 import AdminDashboard from "./components/admin/AdminDashboard";
-import AddCategory from "./components/admin/AddCategory";
-import AddProduct from "./components/admin/AddProduct";
-import Users from "./components/admin/Users";
+import AddCategory from "./components/admin/dashboard/AddCategory";
+import AddProduct from "./components/admin/dashboard/AddProduct";
+import Users from "./components/admin/dashboard/Users";
+import Dashboard from "./components/user/Dashboard";
 
 const App = () => {
   return (

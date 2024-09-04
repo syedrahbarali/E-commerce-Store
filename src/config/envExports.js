@@ -5,5 +5,7 @@ export const config = {
   appwriteProductCollectionID: import.meta.env
     .VITE_APPWRITE_PRODUCT_COLLECTION_ID,
   appwriteUserCollectionID: import.meta.env.VITE_APPWRITE_USER_COLLECTION_ID,
+  appwriteCategoryCollectionID: import.meta.env
+    .VITE_APPWRITE_CATEGORY_COLLECTION_ID,
   appwriteBucketID: import.meta.env.VITE_APPWRITE_BUCKET_ID,
 };
