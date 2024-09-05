@@ -33,7 +33,7 @@ const Header = () => {
 
   const options = [
     {
-      title: "Rahbar",
+      title: role,
       active: authStatus,
     },
     {

@@ -15,7 +15,7 @@ const Select = ({ options = [], className = "", ...props }, ref) => {
             onClick={() => activeLink(option.path ? option.path : "")}
             key={index}
             value={option.title ? option.title : option}
-            className="text-black"
+            className="text-black cursor-pointer"
           >
             {option.title ? option.title : option}
           </option>

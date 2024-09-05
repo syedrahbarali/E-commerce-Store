@@ -65,8 +65,7 @@ export class AuthService {
         );
 
         if (userInfo) {
-          const { name, role } = userInfo.documents[0];
-          user.name = name;
+          const { role } = userInfo.documents[0];
           user.role = role;
           return user;
         }
@@ -89,8 +88,7 @@ export class AuthService {
         );
 
         if (userInfo) {
-          const { name, role } = userInfo.documents[0];
-          user.name = name;
+          const { role } = userInfo.documents[0];
           user.role = role;
           return user;
         }

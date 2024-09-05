@@ -10,6 +10,8 @@ import AddCategory from "./components/admin/dashboard/AddCategory";
 import AddProduct from "./components/admin/dashboard/AddProduct";
 import Users from "./components/admin/dashboard/Users";
 import Dashboard from "./components/user/Dashboard";
+import ListProducts from "./components/ListProducts";
+import UpdateProduct from "./components/admin/dashboard/UpdateProduct";
 
 const App = () => {
   return (
@@ -23,6 +25,14 @@ const App = () => {
             <Route path="" element={<AdminDashboard />}>
               <Route path="add-category" element={<AddCategory />} />
               <Route path="add-product" element={<AddProduct />} />
+              <Route
+                path="all-products"
+                element={<ListProducts slug="update" />}
+              />
+              <Route
+                path="all-products/update/:id"
+                element={<UpdateProduct />}
+              />
               <Route path="users" element={<Users />} />
             </Route>
           </Route>

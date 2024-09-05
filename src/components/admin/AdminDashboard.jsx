@@ -12,6 +12,10 @@ const AdminDashboard = () => {
       path: "add-product",
     },
     {
+      name: "Update Product",
+      path: "all-products",
+    },
+    {
       name: "Users",
       path: "users",
     },

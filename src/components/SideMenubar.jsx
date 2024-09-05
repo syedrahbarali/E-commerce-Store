@@ -4,10 +4,11 @@ import { NavLink } from "react-router-dom";
 
 const SideMenubar = ({ menuItems }) => {
   const role = useSelector((store) => store.auth.userData);
+
   return (
     <div className="w-1/6 h-full">
       <h3 className="text-xl font-bold py-4 capitalize">
-        Welcome {role.name || role.role} !
+        Welcome {role.name ? role.name : role.role} !
       </h3>
       <ul>
         {menuItems.map((item, index) => (

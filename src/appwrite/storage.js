@@ -54,13 +54,19 @@ export class StorageService {
     }
   };
 
-  addProduct = async ({ title, desc, imageId }) => {
+  addProduct = async ({ title, desc, price, quantity, imageId }) => {
     try {
       const newProduct = await this.databases.createDocument(
         appwriteDatabaseID,
         appwriteProductCollectionID,
         ID.unique(),
-        { title, desc, imageId }
+        {
+          title,
+          desc,
+          price: parseFloat(price),
+          quantity: parseInt(quantity),
+          imageId,
+        }
       );
 
       console.log(newProduct);
@@ -68,6 +74,79 @@ export class StorageService {
     } catch (error) {
       console.log(error);
       return false;
+    }
+  };
+
+  getProducts = async () => {
+    try {
+      return await this.databases.listDocuments(
+        appwriteDatabaseID,
+        appwriteProductCollectionID
+      );
+    } catch (error) {
+      console.log(error);
+      return [];
+    }
+  };
+
+  getProduct = async (productId) => {
+    try {
+      return await this.databases.getDocument(
+        appwriteDatabaseID,
+        appwriteProductCollectionID,
+        productId
+      );
+    } catch (error) {
+      console.log(error);
+      return null;
+    }
+  };
+
+  updateProduct = async (
+    productId,
+    { title, desc, price, quantity, imageId }
+  ) => {
+    try {
+      const updatedProduct = await this.databases.updateDocument(
+        appwriteDatabaseID,
+        appwriteProductCollectionID,
+        productId,
+        {
+          title,
+          desc,
+          price: parseFloat(price),
+          quantity: parseInt(quantity),
+          imageId,
+        }
+      );
+
+      if (updatedProduct) {
+        return true;
+      }
+    } catch (error) {
+      console.log(error);
+      return false;
+    }
+  };
+
+  deleteProduct = async ({ $id, imageId }) => {
+    try {
+      // const deletedImage = await this.bucket.deleteFile(
+      //   appwriteBucketID,
+      //   imageId
+      // );
+
+      const deletedImage = await this.deleteFile(imageId);
+
+      if (deletedImage) {
+        return await this.databases.deleteDocument(
+          appwriteDatabaseID,
+          appwriteProductCollectionID,
+          $id
+        );
+      }
+    } catch (error) {
+      console.log(error);
     }
   };
 
@@ -84,6 +163,30 @@ export class StorageService {
       return uploadedImage;
     } catch (error) {
       console.log(error);
+    }
+  };
+
+  getImagePreview = (fileId) => {
+    try {
+      return this.bucket.getFilePreview(appwriteBucketID, fileId);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  deleteFile = async (fileId) => {
+    try {
+      const deletedImage = await this.bucket.deleteFile(
+        appwriteBucketID,
+        fileId
+      );
+
+      if (deletedImage) {
+        return true;
+      }
+    } catch (error) {
+      console.log(error);
+      return false;
     }
   };
 }
