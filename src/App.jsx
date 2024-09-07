@@ -12,6 +12,7 @@ import Users from "./components/admin/dashboard/Users";
 import Dashboard from "./components/user/Dashboard";
 import ListProducts from "./components/ListProducts";
 import UpdateProduct from "./components/admin/dashboard/UpdateProduct";
+import Product from "./pages/Product";
 
 const App = () => {
   return (
@@ -21,6 +22,7 @@ const App = () => {
           <Route path="/dashboard" element={<UserProtectedRoute />}>
             <Route index element={<Dashboard />} />
           </Route>
+
           <Route path="/dashboard/admin" element={<AdminProtectedRoute />}>
             <Route path="" element={<AdminDashboard />}>
               <Route path="add-category" element={<AddCategory />} />
@@ -36,9 +38,11 @@ const App = () => {
               <Route path="users" element={<Users />} />
             </Route>
           </Route>
+
           <Route index element={<Home />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/product/:id" element={<Product />} />
         </Route>
       </Routes>
     </>

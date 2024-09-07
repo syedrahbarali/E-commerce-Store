@@ -8,8 +8,10 @@ import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { PulseLoader } from "react-spinners";
 import ProductCard from "./ProductCard";
+import { useNavigate } from "react-router-dom";
 
 const AddProduct = () => {
+  const navigate = useNavigate();
   const [productData, setProductData] = useState({
     category: [],
     products: [],
@@ -57,6 +59,9 @@ const AddProduct = () => {
             .then((response) => {
               if (response?.$id) {
                 toast.success("Product added successfully");
+                setTimeout(() => {
+                  navigate("/dashboard/admin/all-products");
+                }, 1000);
               }
             });
         } else {

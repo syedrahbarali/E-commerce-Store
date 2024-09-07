@@ -39,6 +39,9 @@ const UpdateProduct = () => {
       .then((response) => {
         if (response) {
           toast.success("Product deleted successfully");
+          setTimeout(() => {
+            navigate("/dashboard/admin/all-products");
+          }, 1500);
         }
       });
   };

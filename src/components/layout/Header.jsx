@@ -1,13 +1,16 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 import { Container, Logo, Logout } from "../index";
 import { HiShoppingCart } from "react-icons/hi";
 import { useSelector } from "react-redux";
 import Select from "../Select";
+import storageService from "@/appwrite/storage";
 
 const Header = () => {
   const authStatus = useSelector((store) => store.auth.status);
-  const role = useSelector((store) => store.auth.userData.role);
+  const userData = useSelector((store) => store.auth.userData);
+  const [cart, setCart] = useState(0);
+
   const navItems = [
     {
       name: "Home",
@@ -33,12 +36,12 @@ const Header = () => {
 
   const options = [
     {
-      title: role,
+      title: userData.role,
       active: authStatus,
     },
     {
       title: "Dashboard",
-      path: `/dashboard${role === "admin" ? "/admin" : ""}`,
+      path: `/dashboard${userData.role === "admin" ? "/admin" : ""}`,
       active: authStatus,
     },
     {
@@ -46,6 +49,13 @@ const Header = () => {
       active: authStatus,
     },
   ];
+
+  useEffect(() => {
+    authStatus &&
+      storageService.getCartItems(userData.$id).then((response) => {
+        setCart(response.total);
+      });
+  }, [authStatus]);
 
   return (
     <div className="py-4 sticky top-0 bg-inherit shadow-md">
@@ -67,9 +77,11 @@ const Header = () => {
             {authStatus && <Logout />}
           </ul>
           <div className="relative">
-            <span className="absolute -right-3 text-xs -top-1.5 px-1 rounded-full font-semibold bg-red-600">
-              7
-            </span>
+            {cart ? (
+              <span className="absolute -right-3 text-xs -top-1.5 px-1 rounded-full font-semibold bg-red-600">
+                {cart}
+              </span>
+            ) : null}
             <HiShoppingCart size={24} />
           </div>
         </div>

@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { PulseLoader } from "react-spinners";
 import ProductCard from "./ProductCard";
 
-const ListProducts = ({ slug = "products" }) => {
+const ListProducts = ({ slug = "product" }) => {
   const [products, setProducts] = useState({
     products: [],
     loading: true,
@@ -18,6 +18,7 @@ const ListProducts = ({ slug = "products" }) => {
             ...prevState,
             products: response.documents,
           }));
+          console.log(response);
         }
       })
       .finally(() => {

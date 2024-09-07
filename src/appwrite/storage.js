@@ -1,5 +1,6 @@
 import { config } from "@/config/envExports";
-import { Client, Databases, Storage, ID, Permission } from "appwrite";
+import { Client, Databases, Storage, ID, Query } from "appwrite";
+import { useId } from "react";
 
 const {
   appwriteURL,
@@ -7,6 +8,7 @@ const {
   appwriteDatabaseID,
   appwriteProductCollectionID,
   appwriteCategoryCollectionID,
+  appwriteCartCollectionID,
   appwriteBucketID,
 } = config;
 
@@ -147,6 +149,63 @@ export class StorageService {
       }
     } catch (error) {
       console.log(error);
+    }
+  };
+
+  // Cart Functionality
+
+  addToCart = async ({ userId, productId, quantity = 1 }) => {
+    try {
+      const existingItem = await this.databases.listDocuments(
+        appwriteDatabaseID,
+        appwriteCartCollectionID,
+        [Query.equal("userId", userId), Query.equal("productId", productId)]
+      );
+
+      if (existingItem.documents[0]?.$id) {
+        await this.databases.updateDocument(
+          appwriteDatabaseID,
+          appwriteCartCollectionID,
+          existingItem.documents[0]?.$id,
+          {
+            quantity:
+              parseInt(existingItem.documents[0].quantity) + parseInt(quantity),
+          }
+        );
+        return true;
+      } else {
+        const addedItem = await this.databases.createDocument(
+          appwriteDatabaseID,
+          appwriteCartCollectionID,
+          ID.unique(),
+          {
+            userId,
+            productId,
+            quantity: parseInt(quantity),
+          }
+        );
+
+        if (addedItem.$id) {
+          return true;
+        }
+      }
+    } catch (error) {
+      console.log(error);
+      return false;
+    }
+  };
+
+  getCartItems = async (userId) => {
+    try {
+      const cart = await this.databases.listDocuments(
+        appwriteDatabaseID,
+        appwriteCartCollectionID,
+        [Query.equal("userId", userId)]
+      );
+      return cart;
+    } catch (error) {
+      // console.log(error);
+      return [];
     }
   };
 
